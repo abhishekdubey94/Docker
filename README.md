@@ -33,3 +33,10 @@ Port mapping : To access an application inside docker container. There are two w
 6. To run a command use RUN. e.g. RUN apt-get update
 7. When dockered builds images, it builds in layered manner.
 8. *docker history imageName*
+9. In dockerfile we have **CMD** which defines what will be started when the container starts for that image. In case of Ubuntu image's dockerfile, we have CMD ["bash"]. The bash command looks for terminal, if it doesn't find it exits. To run such container, we need to add a command like *docker run ubuntu sleep 5*.
+10. To specify command in CMD in dockerfile, use shell command like CMD sleep 5 or use json array format like CMD ["sleep","5"]
+11. To send the arg from docker run command, the dockerfile should have the **ENTRYPOINT**. It appends the argument which we pass by running command. e.g. ENTRYPOINT ["sleep"].
+12. To have a default value in the argument, we specify CMD after ENTRYPOINT.
+13. We can also specify --entrypoint in docker run command. e.g. docker run --entrypoint sleep2.0 ubuntu 10
+
+### Networking in docker

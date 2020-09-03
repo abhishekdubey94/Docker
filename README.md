@@ -14,6 +14,7 @@ A container is an instance of an image (a running program).It is a program with 
 - run -t option - terminal mode (for prompt)
 - run *command* - to run the command in the container, the command should be a valid program for the container file system. 
 **note** : This command gets stored as default for the container and if you start the same container again with the id, it will not take up the command again
+**note** if the command is **sh**, it will open up a shell to interact with container.
 - attach - to attach back to the background container.
 - ps - it lists all the container running on the docker
 - ps --all - it lists all the containers that we ever created
@@ -32,16 +33,23 @@ A container is an instance of an image (a running program).It is a program with 
 Containers are not made to run os. If you run ubuntu, it wil run and exit immediately. This is because, containers are made to run a specific process or task and not the os. If the task gets completed, it exits.
 
 Port mapping : To access an application inside docker container. There are two ways
-1. To use the ip address of the docker container, every docker has an ip address    	   associated with it. The port number is same as the port number of the application inside the docker. It is an internal ip which can be used inside the docker host only.
+1. To use the ip address of the docker container, every docker has an ip address associated with it. The port number is same as the port number of the application inside the docker. It is an internal ip which can be used inside the docker host only.
 2. Another way is to use the ip address of the host along with mapping the port number of the application with some other port number. This can be acheived using **-p newport : port** option with run.
+e.g. docker run -p &lt;outside port&gt; : &lt;inside port&gt; &lt;imageid&gt;
+**Note** : There is no restriction for docker container to access network outside container.
 3. Docker container has its own file system. To persist the data outside the container, map the directory outside the container. This can be achieved using **-v *outside container dir : inside container dir*** option with run command.
 4. To get details of the container, use **inspect** command.
 5. To view the logs of the container(stopped or running), use **logs** command.
 6. To set the environment variable in the container pass it with **-e key=value**. e.g *docker run -e APP_COLOR=blue ImageName*
 7. To check the environment variable, run the inspect command. e.g *docker inspect containerName*
+8. To change working directory of dockerfile, use **WORKDIR** <file system inside container> e.g. WORKDIR /usr/app <br/>
+Any command following will be with respect to this workinf directory. like COPY
 
-### To Create Docker Image
+### To Create Docker Image With Dockerfile
 1. Create a Dockerfile having all the steps of deployment of the application.
+    - Specify a base image.
+    - Run some commands to install additional programs
+    - Specify a command to run on container startup
 2. Then build the docker image using docker build command and specifying the dockerfile, name and tag of the image e.g *docker build Dockerfile -t myapp*
 3. To publish on dockerhub use **push** . e.g. *docker push myapp*
 4. Dockerfile is in Instruction and Argument format. 
@@ -54,5 +62,16 @@ Port mapping : To access an application inside docker container. There are two w
 11. To send the arg from docker run command, the dockerfile should have the **ENTRYPOINT**. It appends the argument which we pass by running command. e.g. ENTRYPOINT ["sleep"].
 12. To have a default value in the argument, we specify CMD after ENTRYPOINT.
 13. We can also specify --entrypoint in docker run command. e.g. docker run --entrypoint sleep2.0 ubuntu 10
+14. To have necessary build files during image creation with dockerfile, we can use COPY command . COPY &lt;relative local directory&gt; &lt;File system on image&gt;
+15. To change working directory of dockerfile, use **WORKDIR** <file system inside container> e.g. WORKDIR /usr/app <br/>
+Any command following will be with respect to this working directory. like COPY
+16. 
 
-### Networking in docker
+### To Create Docker Image With Dockerfile
+- commit - It will create an image from an existing running container
+e.g. docker commit -c 'CMD ["redis-server"]' &lt;Name or id of container&gt;
+
+### Docker-Compose
+1. It is a separate cli tool, that gets installed with the docker.
+2. Can be used to start up multiple Docker containers at the same time.
+3. Automates some of the long-winded arguments we were passing to 'docker run'

@@ -86,3 +86,9 @@ e.g. docker commit -c 'CMD ["redis-server"]' &lt;Name or id of container&gt;
 11. Restart policies - "no"(default) in quotes, always,on-failure, unless-stopped
 12. **docker-compose ps** - shows running containers . **IMPORTANT** it should be run in workspace having docker-compose file.
 13. **command** to override default command set in dockerfile.
+
+## Multi-Step Dockerfile
+1. Mulitple steps can be configured to build 2 different phases.
+2. Specify the FROM statement as 'as' e.g. FROM ubuntu as buildphase.
+3. Second FROM statement will mark the start of second phase.
+4. To use anything from 

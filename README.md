@@ -45,7 +45,7 @@ e.g. docker run -p &lt;outside port&gt; : &lt;inside port&gt; &lt;imageid&gt;
 8. To change working directory of dockerfile, use **WORKDIR** <file system inside container> e.g. WORKDIR /usr/app <br/>
 Any command following will be with respect to this workinf directory. like COPY
 
-### To Create Docker Image With Dockerfile
+## To Create Docker Image With Dockerfile
 1. Create a Dockerfile having all the steps of deployment of the application.
     - Specify a base image.
     - Run some commands to install additional programs
@@ -65,13 +65,24 @@ Any command following will be with respect to this workinf directory. like COPY
 14. To have necessary build files during image creation with dockerfile, we can use COPY command . COPY &lt;relative local directory&gt; &lt;File system on image&gt;
 15. To change working directory of dockerfile, use **WORKDIR** <file system inside container> e.g. WORKDIR /usr/app <br/>
 Any command following will be with respect to this working directory. like COPY
-16. 
+16. To specify the docker file explicitly, use **-f** option.
+e.g. docker build -f &lt;docker file name&gt; &lt;resource directory&gt;
 
-### To Create Docker Image With Dockerfile
+### To Create Docker Image With Running Container
 - commit - It will create an image from an existing running container
 e.g. docker commit -c 'CMD ["redis-server"]' &lt;Name or id of container&gt;
 
-### Docker-Compose
+## Docker-Compose
 1. It is a separate cli tool, that gets installed with the docker.
 2. Can be used to start up multiple Docker containers at the same time.
 3. Automates some of the long-winded arguments we were passing to 'docker run'
+4. In docker compose, the services (i.e. container) have access to each other networks without opening up the ports. Ports have to be opne only to access from localhost.
+5. **docker-compose up** is similar to **docker run myimage**
+6. **docker-compose up --build** is similar to **docker build .** + **docker run myimage**
+7. docker-compose creates a network which joins different container.
+8. In the app, wherever we want to have a connection like http://, we can use the service name from the services part of docker-compose.
+9. **docker-compose up -d** To start all the containers in background use.
+10. **docker-compose down** to stop all the containers.
+11. Restart policies - "no"(default) in quotes, always,on-failure, unless-stopped
+12. **docker-compose ps** - shows running containers . **IMPORTANT** it should be run in workspace having docker-compose file.
+13. **command** to override default command set in dockerfile.

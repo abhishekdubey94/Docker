@@ -1,0 +1,4 @@
+version: '3' #the version of the docker copose that we are going to use
+
+# services represent container
+services: 

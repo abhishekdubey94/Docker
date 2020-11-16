@@ -20,8 +20,9 @@ A container is an instance of an image (a running program).It is a program with 
 - ps --all - it lists all the containers that we ever created
 - create &lt;image name> - creates the image
 - start &lt;image name or id> - start the image, -a will attach and show the output
-- stop - to stop the container, give id or name of the container to stop (gives some time to process to cleanup)
-- kill - to kill the container immediately
+- log &lt;container id> - To view the logs of the container(stopped or running)
+- stop &lt;container id> - to stop the container, give id or name of the container to stop (gives some time to process to cleanup)
+- kill &lt;container id> - to kill the container immediately
 - rm - to remove the container
 - images - to list the images
 - rmi - to remove the image (make sure no container of this image is running)
@@ -39,10 +40,9 @@ e.g. docker run -p &lt;outside port&gt; : &lt;inside port&gt; &lt;imageid&gt;
 **Note** : There is no restriction for docker container to access network outside container.
 3. Docker container has its own file system. To persist the data outside the container, map the directory outside the container. This can be achieved using **-v *outside container dir : inside container dir*** option with run command.
 4. To get details of the container, use **inspect** command.
-5. To view the logs of the container(stopped or running), use **logs** command.
-6. To set the environment variable in the container pass it with **-e key=value**. e.g *docker run -e APP_COLOR=blue ImageName*
-7. To check the environment variable, run the inspect command. e.g *docker inspect containerName*
-8. To change working directory of dockerfile, use **WORKDIR** <file system inside container> e.g. WORKDIR /usr/app <br/>
+5. To set the environment variable in the container pass it with **-e key=value**. e.g *docker run -e APP_COLOR=blue ImageName*
+6. To check the environment variable, run the inspect command. e.g *docker inspect containerName*
+7. To change working directory of dockerfile, use **WORKDIR** <file system inside container> e.g. WORKDIR /usr/app <br/>
 Any command following will be with respect to this workinf directory. like COPY
 
 ## To Create Docker Image With Dockerfile
@@ -50,7 +50,8 @@ Any command following will be with respect to this workinf directory. like COPY
     - Specify a base image.
     - Run some commands to install additional programs
     - Specify a command to run on container startup
-2. Then build the docker image using docker build command and specifying the dockerfile, name and tag of the image e.g *docker build Dockerfile -t myapp*
+2. Then build the docker image using docker build command and specifying the dockerfile, name and tag of the image e.g **docker build Dockerfile -t dockerId/projectname:tag context**
+3. Context is the folder or location where files are present which are needed to build the image.
 3. To publish on dockerhub use **push** . e.g. *docker push myapp*
 4. Dockerfile is in Instruction and Argument format. 
 5. Dockerfile should start with base OS or another image which contains it always. e.g FROM Ubuntu

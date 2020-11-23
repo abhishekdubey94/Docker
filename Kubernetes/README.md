@@ -35,9 +35,17 @@
 * Only the image can be changed while updating the Pod config. (not the ports, name, containers)
 * To solve above issue, we have one more kind of objects i.e. Deployment.
 * Deployment object maintains a set of identical pods, ensuring that they have the correct config and that the right number exists
+* Every single pod that is created is assigned its own IP which is internal to the virtual machine /node and can change when we create new Pod. That is why service is used to connect to the pod.
+* When an image is updated, there is no way that deployment object can get the change.
+    * Delete the pods and deploy the config
+    * Use version with the image name and change it when image is change
+    * Build the image with version and then update
+* In services, the ClusterIP object allows any other object in the cluster to access object pointed by ClusterIP. 
+* Unlike NodePort, ClusterIP does not allow outside world to interact with the object.
 ### Commands
 * kubectl cluster-info - Gives information about the cluster
 * kubectl apply -f &lt;config file&gt; - To load the config files or objects in the cluster.
 * kubectl get &lt;object kind&gt; - print the status of all the running objects.
 * kubectl describe &lt;object type&gt; &lt;object name&gt; - To get the detailed info about an object
 * kubectl delete -f &lt;config file&gt; - to delete the object
+* kubectl set image &lt;object_type&gt;/&lt;object_name&gt; &lt;container_name&gt; = &lt;new image to use&gt; - To update the image deployed
